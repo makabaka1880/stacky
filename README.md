@@ -41,9 +41,10 @@ Stacky is a stack-based language. The interpreter maintains a global stack of **
 $$
 \begin{aligned}
 \sigma  &::= t : \sigma \;\mid\; \emptyset \\
-t       &::= \texttt{Node}(v) \;\mid\; \texttt{Branch}_v(v_1, v_2, \dots) 
+t  &::= \texttt{Node}(v) \;\mid\; \texttt{Branch}_v(v_1, v_2, \dots) 
 \end{aligned}
 $$
+
 The domain of $v$ here is the same as `<value>` in the above concrete syntax.
 
 The configuration $D$ of the operational semantics for Stacky is defined as a tuple $\langle P \;,\; \sigma \rangle$ of the remaining program and the global stack.
@@ -97,7 +98,9 @@ $$
 ## Some Corollaries
 
 > **Theorem**. Consider any tree $t$ and stack $\sigma$. Then there always exist program $P$ such that
-> $$ \langle P \;,\; \sigma \rangle \to^\ast \langle \texttt{skip} \;,\; t : \sigma \rangle $$
+> $$ 
+> \langle P \;,\; \sigma \rangle \to^\ast \langle \texttt{skip} \;,\; t : \sigma \rangle 
+> $$
 
 **Proof**. We proceed by structural induction of $t$.
 
