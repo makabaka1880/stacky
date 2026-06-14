@@ -1,0 +1,17 @@
+{
+  "name": "stacky",
+  "type": "module",
+  "version": "0.1.0",
+  "files": [
+    "stacky_bg.wasm",
+    "stacky.js",
+    "stacky_bg.js",
+    "stacky.d.ts"
+  ],
+  "main": "stacky.js",
+  "types": "stacky.d.ts",
+  "sideEffects": [
+    "./stacky.js",
+    "./snippets/*"
+  ]
+}
