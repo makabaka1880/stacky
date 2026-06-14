@@ -6,33 +6,22 @@
 //
 // Makabaka1880, 2026. All rights reserved.
 
-use std::fmt;
-
+use serde::Serialize;
 use sexp::{Atom, Sexp};
 
+#[derive(Debug, Serialize)]
 pub enum Stmt {
     Push(String),
     Pop,
     Squish(String, u64),
 }
 
+#[derive(Debug, Serialize)]
 pub enum Tree {
     Leaf(String),
     Branch(String, Vec<Tree>),
 }
 
-impl fmt::Debug for Tree {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match self {
-            Self::Leaf(value) => {
-                write!(f, "Leaf({value:?})")
-            }
-            Self::Branch(value, children) => {
-                write!(f, "Branch({value:?}, {children:?})")
-            }
-        }
-    }
-}
 
 fn parse_ident(sexp: &Sexp) -> Result<String, String> {
     match sexp {

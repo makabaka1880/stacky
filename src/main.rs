@@ -8,8 +8,6 @@
 
 use std::io::Read;
 
-use crate::{interpreter::Config, io_utils::print_tree, parser::parse};
-
 mod interpreter;
 mod io_utils;
 mod parser;
@@ -23,32 +21,22 @@ fn main() {
         return;
     }
 
-    let sexp_repr = match sexp::parse(&input) {
-        Ok(sexp) => sexp,
+    let mut program = match interpreter::Config::parse_program(&input) {
+        Ok(prog) => prog,
         Err(e) => {
-            io_utils::print_err(&e.to_string().as_str());
+            io_utils::print_err(&e);
             return;
         }
     };
 
-    let ast = match parse(&sexp_repr) {
-        Ok(ast) => ast,
-        Err(e) => {
-            io_utils::print_err(&e.to_string().as_str());
-            return;
-        }
-    };
-
-    let mut program = interpreter::Config::new(ast);
-    while !match program.step() {
-        Ok(b) => b,
-        Err(e) => {
-            io_utils::print_err(&e.to_string().as_str());
-            return;
-        }
-    } {
+    // Execute step by step, printing the stack top after each step
+    while !program.is_done() {
         io_utils::print_succ("Exec...");
-        let back = program.get_front();
-        io_utils::print_tree(back);
+        if let Err(e) = program.step() {
+            io_utils::print_err(&e);
+            return;
+        }
+        let front = program.get_front();
+        io_utils::print_tree(front);
     }
 }
